@@ -1238,6 +1238,23 @@ html.nav-scroll-lock body{overscroll-behavior:none}
 .ptile:hover .ptile__arrow,.ptile:focus-visible .ptile__arrow{transform:translateX(4px)}
 .ptile:focus-visible{outline:2px solid var(--color-primary-blue);outline-offset:-2px}
 @media (prefers-reduced-motion:reduce){.mega,.mega.is-open,.ptile,.ptile__arrow,.mega__photo img,.mega__explore svg,.nav__item[aria-expanded]::after,.nav__item[aria-expanded] img{transition:none}}
+
+/* ===== Figma sync 15.10: Partners split layout (left: copy + CTA, right: tiles 2x2) ===== */
+section.partners{display:grid;grid-template-columns:434px 710px;justify-content:space-between;align-items:start}
+section.partners .sec__head{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:48px;margin:0}
+section.partners .sec__titles{gap:24px}
+section.partners .sec__lead{width:434px;max-width:100%}
+section.partners .pt{grid-template-columns:repeat(2,346px);row-gap:48px;margin-top:0!important;padding:0!important}
+section.partners .pt__col{padding-right:40px}
+section.partners .btn--secondary{background:#09172d;border-color:#09172d;color:#fff}
+section.partners .btn--secondary:hover,section.partners .btn--secondary:focus-visible{background:#1d68d8;border-color:#1d68d8;color:#fff}
+section.partners .btn--secondary *{color:#fff}
+@media (max-width:1300px){section.partners{grid-template-columns:1fr;row-gap:56px}section.partners .pt{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* ===== Figma sync 15.10: hero photo, soft fade at the bottom ===== */
+.hero__still{-webkit-mask-image:linear-gradient(180deg,#000 53%,rgba(0,0,0,.88) 66%,rgba(0,0,0,.4) 86%,rgba(0,0,0,.28) 100%);mask-image:linear-gradient(180deg,#000 53%,rgba(0,0,0,.88) 66%,rgba(0,0,0,.4) 86%,rgba(0,0,0,.28) 100%)}
+/* ===== Figma sync 15.10: final CTA photo mirrored + blue-to-navy blend ===== */
+.fcta__photo{transform:scaleX(-1) translateX(113px)}
+.fcta__fade{background:linear-gradient(90deg,rgba(22,58,108,0) 0%,rgba(22,58,108,.38) 40%,rgba(13,36,70,.85) 75%,#09172d 100%)!important}
 </style>
 
 
