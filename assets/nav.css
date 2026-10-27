@@ -68,8 +68,9 @@ a.mm__fmedia:hover img,a.mm__fmedia:hover svg,a.mm__fmedia:focus-visible img{tra
 .mm__list--plain .mm__name{font-weight:500}
 .mm__name svg{flex:none;width:16px;height:16px;opacity:0;transform:translateX(-4px);transition:opacity .3s var(--mm-ease),transform .35s var(--mm-ease)}
 .mm__desc{font-size:16px;line-height:24px;color:#7d7d7d}
-.mm__link:hover .mm__name,.mm__link:focus-visible .mm__name{color:var(--color-primary-blue)}
-.mm__link:hover .mm__name svg,.mm__link:focus-visible .mm__name svg{opacity:1;transform:none}
+.mm__link{transition:opacity .3s ease}
+.mm__name svg{display:none}
+.mm__panel:has(.mm__link:hover,.mm__link:focus-visible) .mm__link:not(:hover):not(:focus-visible){opacity:.5}
 .mm__link:focus-visible{outline:2px solid var(--color-primary-blue);outline-offset:4px}
 
 /* region-specific products */
