@@ -2,14 +2,18 @@
 (function(){
   /* TOC: highlight the section in view */
   var toc=document.querySelector('.toc');
-  if(toc&&'IntersectionObserver' in window){
+  if(toc){
     var links=[].slice.call(toc.querySelectorAll('a')), map={};
     links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
     var heads=links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); }).filter(Boolean);
     function set(id){ links.forEach(function(a){ a.classList.toggle('is-active',a===map[id]); }); }
     if(heads[0]) set(heads[0].id);
-    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) set(e.target.id); }); },{rootMargin:'-120px 0px -65% 0px'});
-    heads.forEach(function(h){ io.observe(h); });
+    var cur=null, ticking=false;
+    function upd(){ ticking=false; var id=heads[0]&&heads[0].id; for(var i=0;i<heads.length;i++){ if(heads[i].getBoundingClientRect().top<=160) id=heads[i].id; else break; }
+      if((window.innerHeight+window.scrollY)>=document.documentElement.scrollHeight-4&&heads.length) id=heads[heads.length-1].id;
+      if(id!==cur){ cur=id; set(id); var a=map[id]; if(a){ var tr=toc.getBoundingClientRect(), ar=a.getBoundingClientRect(); if(ar.top<tr.top||ar.bottom>tr.bottom) toc.scrollTop+=ar.top-tr.top-tr.height/2+ar.height/2; } } }
+    window.addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(upd); } },{passive:true});
+    window.addEventListener('resize',upd); upd();
   }
   /* accordions */
   document.addEventListener('click',function(e){

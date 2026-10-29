@@ -10,7 +10,8 @@
 .lhead::before{content:"";position:absolute;left:50%;width:100vw;transform:translateX(-50%);top:0;bottom:0;background:inherit;z-index:-1}
 .lhead__px{position:absolute;top:0;right:0;height:100%;width:820px;max-width:70%;pointer-events:none}
 .lhead__px img{position:absolute;right:0;top:0;height:100%;width:auto}
-.lhead > *:not(.lhead__px){position:relative;max-width:820px}
+.lhead > *:not(.lhead__px){position:relative;max-width:var(--lhead-w,600px)}
+.lhead h1,.lhead__meta{max-width:var(--lhead-w,600px)}
 .lhead h1{font-family:var(--font-heading);font-weight:500;font-size:52px;line-height:1.2;letter-spacing:-.01em;color:var(--color-dark-navy)}
 .lhead__meta{font-size:18px;line-height:1.5;color:var(--color-slate-navy-20)}
 .lhead__meta--wide{max-width:620px}
@@ -23,6 +24,7 @@
 /* ---------- legal document: content + sticky TOC ---------- */
 .ldoc{display:grid;grid-template-columns:minmax(0,881px) 339px;justify-content:space-between;gap:56px;align-items:start;padding:64px var(--gutter) 96px}
 .ldoc--full{grid-template-columns:minmax(0,1fr)}
+.ldoc > aside{align-self:stretch}
 .prose{min-width:0;font-size:16px;line-height:1.6;color:var(--color-slate-navy-20)}
 .prose > * + *{margin-top:16px}
 .prose h2{margin-top:56px;font-family:var(--font-heading);font-weight:500;font-size:46px;line-height:1.2;letter-spacing:-.01em;color:var(--color-dark-navy);scroll-margin-top:110px}
@@ -81,7 +83,7 @@
 
 .agroup{margin-top:56px;scroll-margin-top:110px}
 .agroup:first-of-type{margin-top:0}
-.agroup h2{font-family:var(--font-heading);font-weight:500;font-size:46px;line-height:1.2;color:var(--color-dark-navy);margin-bottom:24px}
+.agroup h2{font-family:var(--font-heading);font-weight:500;font-size:46px;line-height:1.2;color:var(--color-dark-navy);margin-bottom:24px;width:fit-content;padding-right:.08em;background:var(--gradient-hero-title);-webkit-background-clip:text;background-clip:text;color:transparent}
 .alist{border:1px solid #e3e8ee;border-radius:6px;overflow:hidden;background:#fff}
 .aitem + .aitem{border-top:1px solid #e3e8ee}
 .aitem__q{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;padding:22px 24px;text-align:left;font-family:var(--font-heading);font-weight:500;font-size:20px;line-height:1.4;color:var(--color-dark-navy)}
@@ -211,3 +213,13 @@ html,body{overflow-x:clip}
   .contact{padding:56px var(--gutter)}
 }
 @media(max-width:767px){.tbl{min-width:640px}.tbl-wrap{-webkit-overflow-scrolling:touch}}
+
+/* Secondary CTA — Figma "Button / Type=Secondary" (2264:6088): white, 1px #7d7d7d, label #253145, radius 6.
+   Hover = homepage behaviour: label rolls up (no fill change). On dark backgrounds: transparent, white outline + label. */
+.btn.btn--secondary,.lc-ctas .btn.btn--secondary,.fcta .btn.btn--secondary,.mm .btn.btn--secondary{background:#fff;border:1px solid #7d7d7d;color:var(--color-slate-navy-20);border-radius:6px;gap:8px}
+.btn.btn--secondary:hover,.btn.btn--secondary:focus-visible,.lc-ctas .btn.btn--secondary:hover,.lc-ctas .btn.btn--secondary:focus-visible,.mm .btn.btn--secondary:hover,.mm .btn.btn--secondary:focus-visible{background:#fff;border-color:#7d7d7d;color:var(--color-slate-navy-20)}
+.fcta .btn.btn--secondary,.btn.btn--secondary.btn--on-dark{background:transparent;border-color:#fff;color:#fff}
+.fcta .btn.btn--secondary:hover,.fcta .btn.btn--secondary:focus-visible,.btn.btn--secondary.btn--on-dark:hover,.btn.btn--secondary.btn--on-dark:focus-visible{background:transparent;border-color:#fff;color:#fff}
+.btn--secondary.btn--arrow{padding:0 16px 0 24px}
+.btn--arrow .mv-arrow,.btn--arrow > svg{flex:none;transition:transform .5s cubic-bezier(.65,0,.35,1)}
+.btn--arrow:hover > svg,.btn--arrow:focus-visible > svg{transform:translateX(3px)}
