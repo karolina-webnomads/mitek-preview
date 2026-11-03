@@ -3,6 +3,14 @@
 (function(){
   var root=document.documentElement;
 
+  /* ---------- links to pages that already exist in the preview (works on pages built before they existed) ---------- */
+  (function(){
+    var me=document.currentScript||document.querySelector('script[src*="nav.js"]'), base=me&&me.src?me.src.replace(/assets\/nav\.js.*$/,''):'';
+    var U='https://www.miteksystems.com', L={'/products/mitek-verified-identity-platform':'mitek-verified-identity-platform.html','/use-cases/customer-onboarding':'solutions-customer-onboarding.html',
+      '/blog':'blog.html','/resource-library':'resource-library.html','/glossary':'glossary.html','/privacy-policy':'privacy-policy.html','/terms-and-conditions':'terms-and-conditions.html'};
+    [].forEach.call(document.querySelectorAll('a[href^="'+U+'"]'),function(a){ var h=a.getAttribute('href').slice(U.length).replace(/\/$/,''); if(L[h]) a.setAttribute('href',base+L[h]); });
+  })();
+
   /* ---------- region (North America / UK & EMEA) ---------- */
   var REG={us:'North America',uk:'UK & EMEA'};
   function getRegion(){ try{ return localStorage.getItem('mitek-region')||'us'; }catch(e){ return 'us'; } }
