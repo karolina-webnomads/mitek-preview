@@ -97,3 +97,7 @@
 .bp-hero::after{background:linear-gradient(180deg,rgba(243,246,249,0) 25%,#f3f6f9 60%)}
 .bp-article ul{list-style:none}
 .bp-article > p + p{margin-top:-24px}
+/* share icons behave like the footer social icons: no colour change, the other icons dim while one is hovered */
+.bp-icon{transition:opacity .3s ease}
+.bp-icon:hover,.bp-icon:focus-visible{background:#f3f6f9;color:var(--color-slate-navy-20)}
+.bp-share__row:has(.bp-icon:hover,.bp-icon:focus-visible) .bp-icon:not(:hover):not(:focus-visible){opacity:.5}

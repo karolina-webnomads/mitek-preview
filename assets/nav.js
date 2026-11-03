@@ -8,6 +8,7 @@
     var me=document.currentScript||document.querySelector('script[src*="nav.js"]'), base=me&&me.src?me.src.replace(/assets\/nav\.js.*$/,''):'';
     var U='https://www.miteksystems.com', L={'/products/mitek-verified-identity-platform':'mitek-verified-identity-platform.html','/use-cases/customer-onboarding':'solutions-customer-onboarding.html','/customer-success':'customers.html',
       '/blog':'blog.html','/resource-library':'resource-library.html','/glossary':'glossary.html','/privacy-policy':'privacy-policy.html','/terms-and-conditions':'terms-and-conditions.html'};
+    [].forEach.call(document.querySelectorAll('a.nav__item[href="#"],a.mnav__row[href="#"]'),function(a){ if(/customer success/i.test(a.textContent)) a.setAttribute('href',base+'customers.html'); });
     [].forEach.call(document.querySelectorAll('a[href^="'+U+'"]'),function(a){ var h=a.getAttribute('href').slice(U.length).replace(/\/$/,''); if(L[h]) a.setAttribute('href',base+L[h]); });
   })();
 
