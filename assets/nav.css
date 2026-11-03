@@ -138,3 +138,35 @@ html.nav-scroll-lock{overflow:hidden;padding-right:var(--sbw,0px)}
 .mnav__cta{position:absolute;left:0;right:0;bottom:0;padding:16px 20px;border-top:1px solid var(--mm-line);background:#fff}
 .mnav__cta .btn{width:100%;height:42px;border-radius:6px}
 @media (prefers-reduced-motion:reduce){.mm,.mm__panel,.mm-scrim,.mnav,.mnav__screen,.mm__name svg,.region__menu{transition:none!important}}
+
+/* ---------- search: form (panel + results page) and slide-down panel (Figma "Search open" 3648:9165) ---------- */
+.sform{display:flex;gap:12px;width:100%}
+.sform__field{position:relative;flex:1;min-width:0;display:flex;align-items:center;gap:12px;height:56px;padding:0 16px;background:#fff;border:1.5px solid #7d7d7d;border-radius:6px;color:#253145;cursor:text;transition:border-color .3s ease,box-shadow .3s ease}
+.sform__field:focus-within{border-color:var(--color-primary-blue,#1d68d8);box-shadow:0 0 0 3px rgba(29,104,216,.14)}
+.sform__field>svg{flex:none}
+.sform__field input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font:inherit;font-size:16px;line-height:1.5;color:var(--color-dark-navy,#09172d)}
+.sform__field input::placeholder{color:#7d7d7d}
+.sform__field input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.sform__clear{flex:none;display:flex;align-items:center;justify-content:center;width:28px;height:28px;margin-right:-6px;border-radius:50%;color:#7d7d7d;transition:background-color .2s ease,color .2s ease}
+.sform__clear:hover,.sform__clear:focus-visible{background:#f3f6f9;color:#253145}
+.sform__clear[hidden]{display:none}
+.sform .sform__go{flex:none;height:56px;padding:0 24px;border-radius:6px}
+.sp{position:absolute;top:100%;left:50%;width:100vw;transform:translateX(-50%);z-index:4;background:#fff;box-shadow:0 24px 40px -24px rgba(9,23,45,.25);
+  padding:40px 54px 48px;clip-path:inset(0 0 100% 0);visibility:hidden;transition:clip-path .45s cubic-bezier(.65,0,.35,1),visibility 0s linear .45s}
+.sp.is-open{clip-path:inset(0 0 -60px 0);visibility:visible;transition:clip-path .45s cubic-bezier(.65,0,.35,1),visibility 0s}
+.sp__in{max-width:833px;margin:0 auto;opacity:0;transform:translateY(-12px);transition:opacity .3s ease,transform .45s cubic-bezier(.33,1,.68,1)}
+.sp.is-open .sp__in{opacity:1;transform:none;transition-delay:.12s}
+.sp-scrim{position:fixed;inset:0;z-index:19;background:rgba(9,23,45,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s}
+.sp-scrim.is-on{opacity:1;visibility:visible;transition:opacity .35s ease,visibility 0s}
+.nav__search[aria-expanded="true"]{color:var(--color-primary-blue,#1d68d8)}
+@media (max-width:1023px){
+  .sp{padding:20px 20px 24px}
+  .sform{flex-direction:column}
+  .sform .sform__go{height:48px}
+  .sform__field{height:52px}
+}
+@media (prefers-reduced-motion:reduce){.sp,.sp__in,.sp-scrim{transition:none!important}}
+.nav .sp .sform .sform__go,.sform .btn.sform__go{height:56px;border-radius:6px}
+@media (max-width:1023px){.nav .sp .sform .sform__go,.sform .btn.sform__go{height:48px}}
+.nav .sp .sform .sform__go,.sform .btn.sform__go{height:56px!important}
+@media (max-width:1023px){.nav .sp .sform .sform__go,.sform .btn.sform__go{height:48px!important}.sform__field{flex:none}}

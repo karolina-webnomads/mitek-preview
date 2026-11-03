@@ -99,4 +99,46 @@
     document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&mnav.classList.contains('is-open')) openM(false); });
     window.addEventListener('resize',function(){ if(window.innerWidth>1023&&mnav.classList.contains('is-open')) openM(false); });
   }
+
+  /* ---------- search: panel slides down from under the navbar (Figma "Search open"), backdrop blur 8 + navy 35% closes it ---------- */
+  var SI='<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="m17 17-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+      CI='<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="m5 5 8 8M13 5l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  function wireForm(f){
+    var inp=f.querySelector('input'), clr=f.querySelector('.sform__clear'); if(!inp) return;
+    function sync(){ if(clr) clr.hidden=!inp.value; }
+    inp.addEventListener('input',sync); sync();
+    if(clr) clr.addEventListener('click',function(){ inp.value=''; sync(); inp.focus(); });
+    f.addEventListener('submit',function(e){ var q=inp.value.trim(); if(!q){ e.preventDefault(); inp.focus(); return; }
+      if(window.mitekSearchGo){ e.preventDefault(); window.mitekSearchGo(q); closeS(); } });
+  }
+  var hdr=document.querySelector('.site-header .nav')||document.querySelector('.nav'), sBtn=document.querySelector('.nav__search'), sp, sScrim, sOpen=false, sLast;
+  function closeS(){ if(!sOpen) return; sOpen=false; sp.classList.remove('is-open'); sp.setAttribute('aria-hidden','true'); sScrim.classList.remove('is-on'); lock(false);
+    if(sBtn) sBtn.setAttribute('aria-expanded','false'); if(sLast&&sLast.focus) sLast.focus(); }
+  function openS(){
+    if(!sp||sOpen) return; if(window.mitekCloseMenu) window.mitekCloseMenu();
+    if(mnav&&mnav.classList.contains('is-open')){ mnav.classList.remove('is-open'); burger&&burger.setAttribute('aria-expanded','false'); }
+    sLast=document.activeElement; sOpen=true; sp.classList.add('is-open'); sp.setAttribute('aria-hidden','false'); sScrim.classList.add('is-on'); lock(true);
+    if(sBtn) sBtn.setAttribute('aria-expanded','true');
+    var i=sp.querySelector('input'); var q=(new URLSearchParams(location.search)).get('q'); if(q&&!i.value){ i.value=q; i.dispatchEvent(new Event('input')); }
+    setTimeout(function(){ i.focus(); i.select(); },60);
+  }
+  if(hdr){
+    sp=document.createElement('div'); sp.className='sp'; sp.id='site-search'; sp.setAttribute('role','dialog'); sp.setAttribute('aria-label','Search'); sp.setAttribute('aria-hidden','true');
+    sp.innerHTML='<div class="sp__in"><form class="sform" action="search.html" method="get" role="search"><label class="sform__field">'+SI+
+      '<span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search</span><input type="search" name="q" placeholder="Search products, solutions and resources" autocomplete="off" enterkeyhint="search">'+
+      '<button type="button" class="sform__clear" aria-label="Clear search" hidden>'+CI+'</button></label>'+
+      '<button type="submit" class="btn btn--primary sform__go"><span class="btn__roll"><span>Search</span><span aria-hidden="true">Search</span></span></button></form></div>';
+    hdr.appendChild(sp);
+    sScrim=document.createElement('div'); sScrim.className='sp-scrim'; sScrim.setAttribute('aria-hidden','true'); document.body.appendChild(sScrim);
+    sScrim.addEventListener('click',closeS);
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&sOpen) closeS(); });
+    /* keep Tab inside the panel while it is open */
+    sp.addEventListener('keydown',function(e){ if(e.key!=='Tab') return; var f=sp.querySelectorAll('input,button:not([hidden])'), a=f[0], b=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===a){ e.preventDefault(); b.focus(); } else if(!e.shiftKey&&document.activeElement===b){ e.preventDefault(); a.focus(); } });
+    if(sBtn){ sBtn.setAttribute('aria-expanded','false'); sBtn.setAttribute('aria-controls','site-search'); sBtn.addEventListener('click',function(e){ e.stopPropagation(); sOpen?closeS():openS(); }); }
+    [].forEach.call(document.querySelectorAll('.mnav__icon[aria-label="Search"]'),function(b){ b.addEventListener('click',function(){ lock(false); openS(); }); });
+    document.addEventListener('keydown',function(e){ if(e.key==='/'&&!sOpen&&!/input|textarea|select/i.test((document.activeElement||{}).tagName||'')){ e.preventDefault(); openS(); } });
+  }
+  [].forEach.call(document.querySelectorAll('.sform'),wireForm);
+  window.mitekOpenSearch=openS;
 })();
